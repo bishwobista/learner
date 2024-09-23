@@ -22,8 +22,19 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('/cards/add', [CardController::class, 'add'])->name('cards.add');
     Route::post('/cards/store', [CardController::class, 'store'])->name('cards.store');
+    Route::post('/cards/import', [CardController::class, 'import'])->name('cards.import');
 
     Route::get('/search', [CardController::class, 'search'])->name('search');
+
+    Route::get('/sample-download', function () {
+        $filePath = public_path('sample.csv');
+
+        if (file_exists($filePath)) {
+            return response()->download($filePath);
+        } else {
+            return redirect()->back()->with('error', 'File not found.');
+        }
+    })->name('sample.download');;
 
 });
 
