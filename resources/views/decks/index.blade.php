@@ -65,6 +65,13 @@
     data-modal-toggle="deleteDeck-modal">Delete</button>
 
                                     </td>
+                                    <td class="px-6 py-4">
+                                        <form action="{{ route('report') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="deck_id" value="{{ $deck->id }}">
+                                            <button type="submit">Generate Report</button>
+                                        </form>
+                                    </td>
                                 </tr>
         
                                 @empty

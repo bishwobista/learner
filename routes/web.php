@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\DeckController;
-use App\Livewire\Search;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -38,7 +37,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
 });
 
-
+Route::post('/report', [DeckController::class, 'report'])->name('report');
 
 
 Route::view('profile', 'profile')

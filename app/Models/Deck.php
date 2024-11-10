@@ -19,4 +19,9 @@ class Deck extends Model
     {
         return $this->hasMany(Card::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasManyThrough(Review::class, Card::class);
+    }
 }

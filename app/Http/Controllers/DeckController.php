@@ -44,4 +44,25 @@ class DeckController extends Controller
         return view('decks.study', ['deckId' => $deckId]);
     }
     
+    public function report(Request $request)
+    {
+        $deck = Deck::find($request->deck_id);
+        $reviews = $deck->reviews;
+
+        $qualityCounts = $reviews->groupBy('quality')->map->count();
+
+        $qualityDescriptions = [
+            1 => 'Hard',
+            3 => 'Good',
+            5 => 'Easy'
+        ];
+
+        $labels = $qualityCounts->keys()->map(function ($quality) use ($qualityDescriptions) {
+            return $qualityDescriptions[$quality] ?? $quality;
+        });
+        $data = $qualityCounts->values();
+        $deckName = $deck->name;
+
+        return view('report', compact('labels', 'data', 'deckName'));
+    }
 }
