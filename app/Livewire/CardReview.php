@@ -72,7 +72,7 @@ class CardReview extends Component
 
         } elseif ($quality == 3) {
             if ($card->repetitions == 0) {
-                $newInterval = 5; // 5 minutes for the first review
+                $newInterval = 10; // 10 minutes for the first review
             } elseif ($card->repetitions == 1) {
                 $newInterval = 30; // 30 minutes for the second review
             } else {
@@ -83,9 +83,11 @@ class CardReview extends Component
 
         } elseif ($quality == 1) {
             if ($card->repetitions == 0) {
-                $newInterval = 10; // 10 minutes for the first review
-            } else {
-                $newInterval = 7; // 7 minutes for subsequent reviews
+                $newInterval = 5; // 5 minutes for the first review
+            } elseif($card->repetitions == 1) {
+                $newInterval = 2; // 2 minutes for subsequent reviews
+            } else{
+                $newInterval = round($card->interval / $newEf); // Decrease interval using EF
             }
             $card->next_review_date = now()->addMinutes($newInterval);
             $card->repetitions = max(1, $card->repetitions - 1); // Reduce repetitions slightly
