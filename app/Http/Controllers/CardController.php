@@ -46,10 +46,15 @@ class CardController extends Controller
     {
         $request->validate([
             'file' => 'required|mimes:csv,txt,xlsx',
+            'deck_id' => 'required|integer|exists:decks,id',
+
         ]);
+
+        $deckId = $request->deck_id;
+
         
         if ($request->hasFile('file')) {
-            Excel::import(new CardsImport, $request->file('file'));
+            Excel::import(new CardsImport($deckId), $request->file('file'));
         }
 
         return redirect()->route('cards.add')->with('success', 'Cards imported successfully!');

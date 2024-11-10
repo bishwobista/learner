@@ -13,12 +13,19 @@ class CardsImport implements ToModel, WithHeadingRow
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+    protected $deckId;
+
+    public function __construct($deckId)
+    {
+        $this->deckId = $deckId;
+    }
+
     public function model(array $row)
     {
         return new Card([
             'question' => $row['question'],
             'answer' => $row['answer'],
-            'deck_id' => $row['deck_id'],
+            'deck_id' => $this->deckId,
         ]);
     }
 
@@ -27,7 +34,6 @@ class CardsImport implements ToModel, WithHeadingRow
         return [
             '0' => 'required',
             '1' => 'required',
-            '2' => 'required|integer',
         ];
     }
 }
