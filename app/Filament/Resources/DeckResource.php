@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\DeckResource\Pages;
 use App\Filament\Resources\DeckResource\RelationManagers;
 use App\Filament\Resources\DeckResource\RelationManagers\CardsRelationManager;
+use App\Filament\Resources\DeckResource\Widgets\DeckCardReviewsChart;
 use App\Models\Deck;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -80,4 +81,13 @@ class DeckResource extends Resource
             'edit' => Pages\EditDeck::route('/{record}/edit'),
         ];
     }
+
+    // public static function getWidgets(): array
+    // {
+    //     return [
+    //         DeckCardReviewsChart::make([
+    //             'deckId' => 'active',
+    //         ]),
+    //     ];
+    // }
 }
