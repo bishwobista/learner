@@ -34,6 +34,16 @@ class UserResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('password')
                     ->label('Password')
+                  ->placeholder(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\EditRecord ? 'Leave blank to keep current password' : '')
+                    ->required(fn ($livewire) => $livewire instanceof \Filament\Resources\Pages\CreateRecord)
+                    ->dehydrated(false),
+                //role toggle user or admin
+                Forms\Components\Select::make('role')
+                    ->label('Role')
+                    ->options([
+                        'user' => 'user',
+                        'admin' => 'admin',
+                    ])
                     ->required(),
             ]);
     }
@@ -48,6 +58,11 @@ class UserResource extends Resource
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
+                    //role toggle user or admin
+                TextColumn::make('role')
+                    ->searchable()
+                    ->sortable(),
+
             ])
             ->filters([
                 //
